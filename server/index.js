@@ -3,18 +3,30 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 const key = require('../client/src/config/yelp.js');
 const fetch = require("node-fetch");
-
 var app = express();
 
 app.use(express.static(__dirname + "/../client/dist"));
 app.options('*', cors())
-app.options('/the/resource/you/request', cors())
 
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+var queryParams = {
+  location: 'Chicago',
+  price: '2'
+};
+
+app.post('/search-locations', (req, res) => {
+  console.log(req.body);
+  queryParams.location = req.body.location;
+  queryParams.price = req.body.price;
+});
 
 app.get('/get-taco-restaurants', (req, res, next) => {
-  var url = `https://api.yelp.com/v3/businesses/search?term=tacos&location=Chicago`;
+  console.log(queryParams);
+  var url = `https://api.yelp.com/v3/businesses/search?term=tacos&location=${queryParams.location}&price=${queryParams.price}`;
   var token = key.API_KEY;
-
   fetch(url, {
       mode: 'cors',
       headers: { 
@@ -32,6 +44,8 @@ app.get('/get-taco-restaurants', (req, res, next) => {
       res.redirect('/error');
     });
 })
+
+
 
 var port = 8080;
 
