@@ -4,6 +4,7 @@ import $ from 'jquery';
 import YELP_API_KEY from './config/yelp.js';
 const yelp = require('yelp-fusion');
 const client = yelp.client(YELP_API_KEY);
+import styled from 'styled-components';
 
 class App extends React.Component {
   constructor(props) {
@@ -66,9 +67,10 @@ class App extends React.Component {
               value={this.state.price}
               onChange={this.onChange}
             />
-            <input type="submit" value="Submit" />
+            <Button type="submit" value="Submit" />
             {this.state.tacoListings.map(restaurant => (
               <div key={restaurant.alias}>
+                <Restaurant>
                 <img src={restaurant.image_url} height="100" width="100"></img>
                 <div>{restaurant.name}</div>
                 <div>{restaurant.price}</div>
@@ -76,6 +78,8 @@ class App extends React.Component {
                 <div>{restaurant.review_count}</div>
                 <div>{restaurant.location.display_address}</div>
                 <a href={`"${restaurant.url}"`}>{restaurant.name}</a>
+                <Button type="submit" value="Add to favorites!"></Button>
+                </Restaurant>
               </div>
             ))}
           </form>
@@ -84,6 +88,25 @@ class App extends React.Component {
     }
   }
 
-  ReactDOM.render(<App queryParams = { queryParams } />, document.getElementById('taco'));
+  const Button = styled.input`
+  background: transparent;
+  border-radius: 3px;
+  border: 2px solid palevioletred;
+  color: palevioletred;
+  margin: 0 1em;
+  padding: 0.25em 1em;
+`;
+const Restaurant = styled.div`
+  display: flex;
+  height: 73px;
+  border-bottom: solid;
+  border-bottom-color: #E8E8E8;
+  border-bottom-width: 0.5px;
+  border-top: solid;
+  border-top-color: #E8E8E8;
+  border-top-width: 0.5px;
+`;
+
+  ReactDOM.render(<App />, document.getElementById('taco'));
 
 export default App;

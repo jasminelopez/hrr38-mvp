@@ -3,6 +3,8 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 const key = require('../client/src/config/yelp.js');
 const fetch = require("node-fetch");
+const db = require('../database/index');
+
 var app = express();
 
 app.use(express.static(__dirname + "/../client/dist"));
@@ -14,7 +16,7 @@ app.use(bodyParser.json());
 
 var queryParams = {
   location: 'Chicago',
-  price: '2'
+  price: '3'
 };
 
 app.post('/search-locations', (req, res) => {
@@ -22,6 +24,11 @@ app.post('/search-locations', (req, res) => {
   queryParams.location = req.body.location;
   queryParams.price = req.body.price;
 });
+
+//TODO create a button on each restaurant that adds it to the database
+app.post('restaurant', (req, res) => {
+
+})
 
 app.get('/get-taco-restaurants', (req, res, next) => {
   console.log(queryParams);
