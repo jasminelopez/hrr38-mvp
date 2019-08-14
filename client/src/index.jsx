@@ -19,6 +19,7 @@ class App extends React.Component {
     }
     this.handleSearch = this.handleSearch.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.makeFavorite = this.makeFavorite.bind(this);
   }
 
   componentDidMount() {
@@ -30,7 +31,7 @@ class App extends React.Component {
   }
 
   onChange (event) {
-    this.setState({[event.target.name]: event.target.value}); 
+    this.setState({[event.target.name]: event.target.value});
   }
 
   handleSearch() {
@@ -44,14 +45,28 @@ class App extends React.Component {
     })
   };
 
-
+  makeFavorite(event) {
+    var restaruantObj = event.target.value;
+    console.log(Object.keys(restaruantObj));
+  //   fetch('/post-taco-restaurants', {
+  //     method: 'POST',
+  //     headers: {'Content-Type': 'application/json'}
+  //   })
+  };
 
     render() {
       return (
         <div>
-          <div>Search for Tacos!</div>
-          <form onSubmit={this.handleSearch}>
-            <input
+          <TitleContainer>
+          <Title>Taco Finder</Title>
+          </TitleContainer>
+          <SearchNFavorites>
+            <Search>Search</Search>
+            <Favorites>favorites</Favorites>
+          </SearchNFavorites>
+          <SearchContainer>
+          <Form onSubmit={this.handleSearch}>
+            <Input
               type="text"
               className="location"
               name="location"
@@ -59,7 +74,7 @@ class App extends React.Component {
               value={this.state.location}
               onChange={this.onChange}
             />
-            <input
+            <Input
               type="text"
               className="price"
               name="price"
@@ -68,45 +83,171 @@ class App extends React.Component {
               onChange={this.onChange}
             />
             <Button type="submit" value="Submit" />
-            {this.state.tacoListings.map(restaurant => (
+          </Form>
+          </SearchContainer>
+          <ListingsContainer>
+          {this.state.tacoListings.map(restaurant => (
               <div key={restaurant.alias}>
                 <Restaurant>
-                <img src={restaurant.image_url} height="100" width="100"></img>
-                <div>{restaurant.name}</div>
-                <div>{restaurant.price}</div>
-                <div>{restaurant.rating}</div>
-                <div>{restaurant.review_count}</div>
-                <div>{restaurant.location.display_address}</div>
-                <a href={`"${restaurant.url}"`}>{restaurant.name}</a>
-                <Button type="submit" value="Add to favorites!"></Button>
+
+                  <Image src={restaurant.image_url} height="" width="80"/>
+                  <Name>{restaurant.name}</Name>
+                  <Price>{restaurant.price}</Price>
+                  <Rating>{restaurant.rating}</Rating>
+                  <ReviewCount>{restaurant.review_count} reviews</ReviewCount>
+                  <Address>{restaurant.location.display_address}</Address>
+                    { console.log(restaurant) }
+                    <Favorite type="submit" placeholder="<3" value={restaurant} onClick={this.makeFavorite}></Favorite>
                 </Restaurant>
               </div>
             ))}
-          </form>
+            </ListingsContainer>
         </div>
       )
     }
   }
+// TODO place an index on each restaurant making it accessible on the tacoListings array
+// TODO post restaurant to the MongoDB database using the endpoint '/post-taco-restaurants'
 
-  const Button = styled.input`
+const SearchNFavorites = styled.div`
+  display: flex;
+  justify-content: center;
+  height: 50px;
+  width: 80%;
+  margin: auto;
+`;
+
+const Search = styled.div`
+  font-family: 'Abel', sans-serif;
+  font-size: 200%;
+  margin: 10px;
+`;
+
+const Favorites = styled.div`
+  font-family: 'Abel', sans-serif;
+  font-size: 200%;
+  margin: 10px;
+`;
+
+const TitleContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  font-family: 'Abel', sans-serif;
+  height: 200px;
+  width: 80%;
+  margin: auto;
+`;
+
+const Title = styled.div`
+  font-family: 'Abel', sans-serif;
+  margin: auto;
+  font-size: 800%;
+`;
+
+const SearchContainer = styled.div`
+  background-color: #283747;
+  display: flex;
+  justify-content: center;
+  width: 70%;
+  height: 200px;
+  margin: auto;
+`;
+
+const ListingsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-content: center;
+  background-color: #D3D3D3;
+  width: 70%;
+  margin: auto;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  margin: 0 15px
+`;
+
+const Input = styled.input`
+  padding: 12px 20px;
+  margin: 15px;
+  box-sizing: border-box;
+  border: 2px solid white;
+  border-radius: 4px;
+  &:focus {
+    border-color: #555;
+    outline: none !important;
+  }
+`;
+
+const Button = styled.input`
   background: transparent;
   border-radius: 3px;
-  border: 2px solid palevioletred;
-  color: palevioletred;
+  border: 2px solid white;
+  color: white;
   margin: 0 1em;
   padding: 0.25em 1em;
 `;
-const Restaurant = styled.div`
-  display: flex;
-  height: 73px;
-  border-bottom: solid;
-  border-bottom-color: #E8E8E8;
-  border-bottom-width: 0.5px;
-  border-top: solid;
-  border-top-color: #E8E8E8;
-  border-top-width: 0.5px;
+
+const Favorite = styled.button`
+background: transparent;
+  border-radius: 3px;
+  border: 2px solid black;
+  color: white;
+  margin: 0 1em;
+  padding: 0.25em 1em;
 `;
 
-  ReactDOM.render(<App />, document.getElementById('taco'));
+const Restaurant = styled.div`
+  display: flex;
+  margin: auto;
+  height: 73px;
+  width: 90%;
+  margin: 3px;
+  margin-left: 40px;
+  background-color: #ffffff;
+`;
+
+const Name = styled.div`
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: 160%;
+  margin: 10px;
+`;
+
+const Price = styled.div`
+  font-family: 'Abel', sans-serif;
+  font-size: 120%;
+  margin: 10px;
+`;
+
+const Rating = styled.div`
+  font-family: 'Abel', sans-serif;
+  font-size: 120%;
+  margin: 10px;
+`;
+
+const ReviewCount = styled.div`
+  font-family: 'Abel', sans-serif;
+  font-size: 120%;
+  margin: 10px;
+`;
+
+const Address = styled.div`
+  font-family: 'Abel', sans-serif;
+  align-self: flex-end;
+  font-size: 120%;
+  margin: 10px;
+`;
+
+const Image = styled.img`
+  font-family: 'Abel', sans-serif;
+  border-radius: 20%;
+`;
+
+
+ReactDOM.render(<App />, document.getElementById('taco'));
 
 export default App;

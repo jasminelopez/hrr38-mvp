@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 mongoose.set('useCreateIndex', true);
 mongoose.connect('mongodb://localhost/fetcher', { useNewUrlParser: true })
         .then(() => console.log('MongoDB connected...'))
-        .catch(err => console.log('error'));
+        .catch(err => console.log('MONGODB CONN ERROR'));
 
 let restaurantSchema = mongoose.Schema({
   id: {type: Number, required: true, unique: true},

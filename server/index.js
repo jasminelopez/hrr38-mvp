@@ -7,6 +7,7 @@ const db = require('../database/index');
 
 var app = express();
 
+app.use(bodyParser.json());
 app.use(express.static(__dirname + "/../client/dist"));
 app.options('*', cors())
 
@@ -26,9 +27,12 @@ app.post('/search-locations', (req, res) => {
 });
 
 //TODO create a button on each restaurant that adds it to the database
-app.post('restaurant', (req, res) => {
+app.post('/post-taco-restaurant', (req, res) => {
+  res.send('hello world!')
+  //take information from restaurant div and post it into the mongoDB database
+  // var restaurantData = new Restaurant(req.body);
 
-})
+});
 
 app.get('/get-taco-restaurants', (req, res, next) => {
   console.log(queryParams);
@@ -36,21 +40,23 @@ app.get('/get-taco-restaurants', (req, res, next) => {
   var token = key.API_KEY;
   fetch(url, {
       mode: 'cors',
-      headers: { 
+      headers: {
         'Access-Control-Allow-Credentials': true,
         'Access-Control-Allow-Origin': 'http://localhost:8080',
         'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json', 
+        'Content-Type': 'application/json',
       }
     })
-    .then(results => results.json())
+    .then(results =>
+      results.json()
+    )
     .then(data => {
-        res.send({data});
+        res.send({ data });
     })
     .catch(err => {
-      res.redirect('/error');
+      console.log(err);
     });
-})
+});
 
 
 
