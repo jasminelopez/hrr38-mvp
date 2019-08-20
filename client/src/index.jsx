@@ -24,7 +24,9 @@ class App extends React.Component {
 
   componentDidMount() {
     fetch('/get-taco-restaurants')
-      .then(res => res.json())
+      .then(res =>
+        res.json()
+      )
       .then(listings => {
         this.setState({ tacoListings: listings.data.businesses });
       })
@@ -46,8 +48,9 @@ class App extends React.Component {
   };
 
   makeFavorite(event) {
-    var restaruantObj = event.target.value;
-    console.log(Object.keys(restaruantObj));
+    var ListingIndex = event.target.value;
+    console.log(ListingIndex);
+    console.log(this.state.tacoListings[ListingIndex]);
   //   fetch('/post-taco-restaurants', {
   //     method: 'POST',
   //     headers: {'Content-Type': 'application/json'}
@@ -86,21 +89,20 @@ class App extends React.Component {
           </Form>
           </SearchContainer>
           <ListingsContainer>
-          {this.state.tacoListings.map(restaurant => (
+          {this.state.tacoListings.map((restaurant, index) => (
               <div key={restaurant.alias}>
-                <Restaurant>
 
+                <Restaurant>
                   <Image src={restaurant.image_url} height="" width="80"/>
                   <Name>{restaurant.name}</Name>
                   <Price>{restaurant.price}</Price>
                   <Rating>{restaurant.rating}</Rating>
                   <ReviewCount>{restaurant.review_count} reviews</ReviewCount>
                   <Address>{restaurant.location.display_address}</Address>
-                    { console.log(restaurant) }
-                    <Favorite type="submit" placeholder="<3" value={restaurant} onClick={this.makeFavorite}></Favorite>
+                    <Favorite type="submit" placeholder="<3" value={index} onClick={this.makeFavorite}></Favorite>
                 </Restaurant>
               </div>
-            ))}
+          ))}
             </ListingsContainer>
         </div>
       )
