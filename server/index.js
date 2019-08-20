@@ -34,10 +34,12 @@ app.post('/post-taco-restaurant', (req, res) => {
 
 });
 
+const API_KEY = process.env.YELP_API_KEY;
+
 app.get('/get-taco-restaurants', (req, res, next) => {
   console.log(queryParams);
   var url = `https://api.yelp.com/v3/businesses/search?term=tacos&location=${queryParams.location}&price=${queryParams.price}`;
-  var token = key.API_KEY;
+  var token = process.env.YELP_API_KEY;
   fetch(url, {
       mode: 'cors',
       headers: {
