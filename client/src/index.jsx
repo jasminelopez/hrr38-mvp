@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import YELP_API_KEY from './config/yelp.js';
-const yelp = require('yelp-fusion');
-const client = yelp.client(YELP_API_KEY);
+// import YELP_API_KEY from './config/yelp.js';
+// const yelp = require('yelp-fusion');
+// const client = yelp.client(YELP_API_KEY);
 import styled from 'styled-components';
 
 class App extends React.Component {
