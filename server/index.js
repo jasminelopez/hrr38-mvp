@@ -1,7 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
-// const key = require('../client/src/config/yelp.js');
 const fetch = require("node-fetch");
 const db = require('../database/index');
 
