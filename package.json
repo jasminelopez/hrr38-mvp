@@ -4,10 +4,9 @@
   "description": "MVP",
   "main": "index.js",
   "scripts": {
-    "start": "node ./server/index.js",
-    "react-dev": "webpack -d --watch",
     "start:dev": "nodemon ./server/index.js",
-    "db": "mongod --config /usr/local/etc/mongod.conf"
+    "react-dev": "webpack -d --watch",
+    "start:db": "mongod --config /usr/local/etc/mongod.conf"
   },
   "repository": {
     "type": "git",
@@ -20,6 +19,8 @@
   },
   "homepage": "https://github.com/jasminelopez/hrr38-mvp-project#readme",
   "dependencies": {
+    "@material-ui/core": "^4.3.3",
+    "@material-ui/icons": "^4.2.1",
     "@material/icon-button": "^2.3.0",
     "bluebird": "^3.5.5",
     "body-parser": "^1.19.0",

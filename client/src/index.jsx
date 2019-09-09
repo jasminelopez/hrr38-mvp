@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
+import Button from '@material-ui/core/Button';
 import styled from 'styled-components';
 
 class App extends React.Component {
@@ -82,7 +83,7 @@ class App extends React.Component {
               value={this.state.price}
               onChange={this.onChange}
             />
-            <Button type="submit" value="Submit" />
+            <Submit type="submit" value="Submit" />
           </Form>
           </SearchContainer>
           <ListingsContainer>
@@ -90,13 +91,13 @@ class App extends React.Component {
               <div key={restaurant.alias}>
 
                 <Restaurant>
+                <Favorite type="submit" placeholder="<3" value={index} onClick={this.makeFavorite}></Favorite>
                   <Image src={restaurant.image_url} height="" width="80"/>
                   <Name>{restaurant.name}</Name>
                   <Price>{restaurant.price}</Price>
-                  <Rating>{restaurant.rating}</Rating>
+                  <Rating>{restaurant.rating} star rating</Rating>
                   <ReviewCount>{restaurant.review_count} reviews</ReviewCount>
                   <Address>{restaurant.location.display_address}</Address>
-                    <Favorite type="submit" placeholder="<3" value={index} onClick={this.makeFavorite}></Favorite>
                 </Restaurant>
               </div>
           ))}
@@ -132,6 +133,7 @@ const TitleContainer = styled.div`
   display: flex;
   justify-content: center;
   font-family: 'Abel', sans-serif;
+  border-radius: 3px;
   height: 200px;
   width: 80%;
   margin: auto;
@@ -144,8 +146,9 @@ const Title = styled.div`
 `;
 
 const SearchContainer = styled.div`
-  background-color: #283747;
+  background-color: #F03E81;
   display: flex;
+  border-radius: 3px;
   justify-content: center;
   width: 70%;
   height: 200px;
@@ -157,9 +160,20 @@ const ListingsContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   align-content: center;
-  background-color: #D3D3D3;
+  background-color: #FDFEFE;
   width: 70%;
   margin: auto;
+`;
+
+const Restaurant = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  height: 10%;
+  width: 90%;
+  margin: 3px;
+  margin-left: 40px;
+  background-color: #ffffff;
 `;
 
 const Form = styled.form`
@@ -181,7 +195,7 @@ const Input = styled.input`
   }
 `;
 
-const Button = styled.input`
+const Submit = styled.input`
   background: transparent;
   border-radius: 3px;
   border: 2px solid white;
@@ -190,8 +204,45 @@ const Button = styled.input`
   padding: 0.25em 1em;
 `;
 
+const Name = styled.div`
+  font-family: 'Abel', sans-serif;
+  font-weight: bold;
+  font-size: 160%;
+  margin: 5px;
+`;
+
+const Price = styled.div`
+  font-family: 'Abel', sans-serif;
+  font-size: 120%;
+  margin: 3px;
+`;
+
+const Rating = styled.div`
+  font-family: 'Abel', sans-serif;
+  font-size: 120%;
+  margin: 3px;
+`;
+
+const ReviewCount = styled.div`
+  font-family: 'Abel', sans-serif;
+  font-size: 120%;
+  margin: 3px;
+`;
+
+const Address = styled.div`
+  font-family: 'Abel', sans-serif;
+  font-size: 120%;
+  margin: 3px;
+`;
+
+const Image = styled.img`
+  font-family: 'Abel', sans-serif;
+  border-radius: 20%;
+`;
+
 const Favorite = styled.button`
-background: transparent;
+  background: transparent;
+  align-self: flex-end;
   border-radius: 3px;
   border: 2px solid black;
   color: white;
@@ -199,52 +250,6 @@ background: transparent;
   padding: 0.25em 1em;
 `;
 
-const Restaurant = styled.div`
-  display: flex;
-  margin: auto;
-  height: 73px;
-  width: 90%;
-  margin: 3px;
-  margin-left: 40px;
-  background-color: #ffffff;
-`;
-
-const Name = styled.div`
-  font-family: 'Abel', sans-serif;
-  font-weight: bold;
-  font-size: 160%;
-  margin: 10px;
-`;
-
-const Price = styled.div`
-  font-family: 'Abel', sans-serif;
-  font-size: 120%;
-  margin: 10px;
-`;
-
-const Rating = styled.div`
-  font-family: 'Abel', sans-serif;
-  font-size: 120%;
-  margin: 10px;
-`;
-
-const ReviewCount = styled.div`
-  font-family: 'Abel', sans-serif;
-  font-size: 120%;
-  margin: 10px;
-`;
-
-const Address = styled.div`
-  font-family: 'Abel', sans-serif;
-  align-self: flex-end;
-  font-size: 120%;
-  margin: 10px;
-`;
-
-const Image = styled.img`
-  font-family: 'Abel', sans-serif;
-  border-radius: 20%;
-`;
 
 
 ReactDOM.render(<App />, document.getElementById('taco'));
